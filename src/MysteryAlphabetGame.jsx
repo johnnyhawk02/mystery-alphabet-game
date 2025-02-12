@@ -43,12 +43,12 @@ const MysteryAlphabetGame = () => {
     setWrongCount(0);
   };
 
-  // Initialize with an animal on component mount.
+  // Initialize with an animal on mount.
   useEffect(() => {
     getRandomItem();
   }, []);
 
-  // Wrap handleKeyPress in useCallback so it can be safely included in dependency arrays.
+  // Wrap handleKeyPress in useCallback to ensure it's stable and can be safely added as a dependency.
   const handleKeyPress = useCallback((event) => {
     const pressedKey = event.key.toUpperCase();
     if (currentItem && pressedKey === currentItem.letter.toUpperCase()) {
@@ -71,7 +71,7 @@ const MysteryAlphabetGame = () => {
     }
   }, [currentItem, wrongCount]);
 
-  // Include handleKeyPress in the effect dependency array.
+  // Include handleKeyPress in the dependency array to avoid the missing dependency error.
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
