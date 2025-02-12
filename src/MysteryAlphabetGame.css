@@ -1,0 +1,73 @@
+/* src/MysteryAlphabetGame.css */
+.game-container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .image-container {
+    width: 100%;
+    height: 250px;             /* Fixed height to preserve layout */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .item-image {
+    max-height: 250px;         /* Matches container height */
+    width: auto;               /* Maintains aspect ratio */
+    border: 2px solid #ccc;
+    border-radius: 10px;
+  }
+  
+  .instructions {
+    font-size: 1.2em;
+    margin: 20px 0;
+    min-height: 40px;          /* Reserve space for instructions */
+  }
+  
+  .feedback {
+    color: green;
+    font-size: 1.5em;
+    margin: 10px 0;
+    min-height: 40px;          /* Reserve fixed space for messages */
+    line-height: 40px;         /* Center the message vertically */
+  }
+  
+  /* Virtual Keyboard Styles */
+  .keyboard {
+    display: inline-block;
+    margin-top: 20px;
+  }
+  
+  .keyboard-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .key-button {
+    width: 40px;
+    height: 40px;
+    margin: 3px;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background: linear-gradient(to bottom, #ffffff, #cccccc);
+    box-shadow: 0 4px 0 #999;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+  }
+  
+  .key-button:hover {
+    background: linear-gradient(to bottom, #ffffff, #c0c0c0);
+  }
+  
+  .key-button:active {
+    transform: translateY(4px);
+    box-shadow: none;
+  }
+  
