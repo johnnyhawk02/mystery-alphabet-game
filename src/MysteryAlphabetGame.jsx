@@ -43,12 +43,19 @@ const MysteryAlphabetGame = () => {
     setWrongCount(0);
   };
 
-  // Initialize with an animal on mount.
+  // Speak the animal name using the Speech Synthesis API.
+  const speakAnimalName = (name) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(name);
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
   useEffect(() => {
     getRandomItem();
   }, []);
 
-  // Wrap handleKeyPress in useCallback to ensure it's stable and can be safely added as a dependency.
+  // Wrap handleKeyPress in useCallback so that it's stable for dependency arrays.
   const handleKeyPress = useCallback((event) => {
     const pressedKey = event.key.toUpperCase();
     if (currentItem && pressedKey === currentItem.letter.toUpperCase()) {
@@ -71,7 +78,6 @@ const MysteryAlphabetGame = () => {
     }
   }, [currentItem, wrongCount]);
 
-  // Include handleKeyPress in the dependency array to avoid the missing dependency error.
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
@@ -89,6 +95,7 @@ const MysteryAlphabetGame = () => {
             src={currentItem.image}
             alt={currentItem.name}
             className="item-image"
+            onLoad={() => speakAnimalName(currentItem.name)}
           />
         )}
       </div>
