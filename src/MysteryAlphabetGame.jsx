@@ -1,5 +1,5 @@
 // src/MysteryAlphabetGame.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './MysteryAlphabetGame.css';
 
 const alphabetItems = [
@@ -16,7 +16,7 @@ const alphabetItems = [
   { name: 'Koala',          letter: 'K', image: '/images/koala.jpg' },
   { name: 'Lion',           letter: 'L', image: '/images/lion.jpg' },
   { name: 'Monkey',         letter: 'M', image: '/images/monkey.jpg' },
-  { name: 'Newt',           letter: 'N', image: '/images/newt.jpg' },  // Replacement for Narwhal
+  { name: 'Newt',           letter: 'N', image: '/images/newt.jpg' }, // Replacement for Narwhal
   { name: 'Owl',            letter: 'O', image: '/images/owl.jpg' },
   { name: 'Penguin',        letter: 'P', image: '/images/penguin.jpg' },
   { name: 'Quail',          letter: 'Q', image: '/images/quail.jpg' },
@@ -36,7 +36,6 @@ const MysteryAlphabetGame = () => {
   const [message, setMessage] = useState('');
   const [wrongCount, setWrongCount] = useState(0);
 
-  // Pick a random animal and reset the wrong count.
   const getRandomItem = () => {
     const randomIndex = Math.floor(Math.random() * alphabetItems.length);
     setCurrentItem(alphabetItems[randomIndex]);
@@ -49,8 +48,8 @@ const MysteryAlphabetGame = () => {
     getRandomItem();
   }, []);
 
-  // Handle key presses from both physical and virtual keyboards.
-  const handleKeyPress = (event) => {
+  // Wrap handleKeyPress in useCallback so it can be safely included in dependency arrays.
+  const handleKeyPress = useCallback((event) => {
     const pressedKey = event.key.toUpperCase();
     if (currentItem && pressedKey === currentItem.letter.toUpperCase()) {
       setMessage('Correct!');
@@ -60,27 +59,24 @@ const MysteryAlphabetGame = () => {
       }, 1000);
     } else {
       if (wrongCount === 1) {
-        // On second wrong attempt, reveal the animal and move on.
         setMessage(`The animal is ${currentItem.name}.`);
         setWrongCount(0);
         setTimeout(() => {
           getRandomItem();
         }, 1500);
       } else {
-        // First wrong attempt.
         setWrongCount(wrongCount + 1);
         setMessage('Try again!');
       }
     }
-  };
+  }, [currentItem, wrongCount]);
 
-  // Add a global keydown listener.
+  // Include handleKeyPress in the effect dependency array.
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [currentItem, wrongCount]);
+  }, [handleKeyPress]);
 
-  // Handler for virtual keyboard clicks.
   const handleVirtualKeyClick = (letter) => {
     handleKeyPress({ key: letter });
   };
@@ -99,7 +95,6 @@ const MysteryAlphabetGame = () => {
       <p className="instructions">
         Press the key corresponding to the first letter of the animal’s name!
       </p>
-      {/* Feedback area with reserved space */}
       <div className="feedback">{message}</div>
       <div className="keyboard">
         <div className="keyboard-row">
