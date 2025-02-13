@@ -43,19 +43,10 @@ const MysteryAlphabetGame = () => {
     setWrongCount(0);
   };
 
-  // Speak the animal name using the Speech Synthesis API.
-  const speakAnimalName = (name) => {
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(name);
-      window.speechSynthesis.speak(utterance);
-    }
-  };
-
   useEffect(() => {
     getRandomItem();
   }, []);
 
-  // Wrap handleKeyPress in useCallback so that it's stable for dependency arrays.
   const handleKeyPress = useCallback((event) => {
     const pressedKey = event.key.toUpperCase();
     if (currentItem && pressedKey === currentItem.letter.toUpperCase()) {
@@ -87,6 +78,14 @@ const MysteryAlphabetGame = () => {
     handleKeyPress({ key: letter });
   };
 
+  // Speech synthesis function
+  const speakAnimalName = (name) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(name);
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
   return (
     <div className="game-container">
       <div className="image-container">
@@ -99,9 +98,7 @@ const MysteryAlphabetGame = () => {
           />
         )}
       </div>
-      <p className="instructions">
-        Press the key corresponding to the first letter of the animal’s name!
-      </p>
+      {/* Instructions removed */}
       <div className="feedback">{message}</div>
       <div className="keyboard">
         <div className="keyboard-row">
