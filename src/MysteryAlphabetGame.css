@@ -1,73 +1,201 @@
-/* src/MysteryAlphabetGame.css */
+/* Ensure full viewport for HTML and body */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* Main container fills the entire viewport */
 .game-container {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    max-width: 600px;
-    margin: auto;
-  }
-  
-  .image-container {
-    width: 100%;
-    height: 250px;             /* Fixed height to preserve layout */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .item-image {
-    max-height: 250px;         /* Matches container height */
-    width: auto;               /* Maintains aspect ratio */
-    border: 2px solid #ccc;
-    border-radius: 10px;
-  }
-  
-  .instructions {
-    font-size: 1.2em;
-    margin: 20px 0;
-    min-height: 40px;          /* Reserve space for instructions */
-  }
-  
-  .feedback {
-    color: green;
-    font-size: 1.5em;
-    margin: 10px 0;
-    min-height: 40px;          /* Reserve fixed space for messages */
-    line-height: 40px;         /* Center the message vertically */
-  }
-  
-  /* Virtual Keyboard Styles */
-  .keyboard {
-    display: inline-block;
-    margin-top: 20px;
-  }
-  
-  .keyboard-row {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
-  
-  .key-button {
-    width: 40px;
-    height: 40px;
-    margin: 3px;
-    font-size: 1em;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    background: linear-gradient(to bottom, #ffffff, #cccccc);
-    box-shadow: 0 4px 0 #999;
-    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
-  }
-  
-  .key-button:hover {
-    background: linear-gradient(to bottom, #ffffff, #c0c0c0);
-  }
-  
-  .key-button:active {
-    transform: translateY(4px);
-    box-shadow: none;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+}
+
+/* Image container with fixed height */
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;             /* Fixed height for image container */
+  margin-bottom: 1rem;
+}
+
+.item-image {
+  height: 250px;             /* Fixed image height */
+  width: auto;               /* Auto-adjust width to maintain aspect ratio */
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+
+/* Instructions and feedback area */
+.instructions {
+  font-size: 1.2em;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+.feedback {
+  color: green;
+  font-size: 1.5em;
+  margin: 0.5rem 0;
+  text-align: center;
+  min-height: 2rem;
+  line-height: 2rem;
+}
+
+/* Keyboard container fills remaining space without exceeding viewport height */
+.keyboard {
+  flex: 1;  /* Takes up all remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically centers the entire keyboard group */
+  align-items: center;
+  width: 100%;
+}
+
+/* Keyboard rows: keys are arranged in rows that don't individually stretch */
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0;
+}
+
+/* Fixed-size keys for uniformity */
+.key-button {
+  width: 50px;      /* Fixed width */
+  height: 50px;     /* Fixed height */
+  font-size: 1em;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  background: linear-gradient(to bottom, #ffffff, #cccccc);
+  box-shadow: 0 4px 0 #999;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+}
+
+.key-button:hover {
+  background: linear-gradient(to bottom, #ffffff, #c0c0c0);
+}
+
+.key-button:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+/* Ensure full viewport for HTML and body */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* Main container fills the viewport */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+}
+
+/* Image container */
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Wrapper for positioning the speak icon */
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Fixed image height with auto-adjusted width */
+.item-image {
+  height: 250px;
+  width: auto;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+
+/* Speak icon positioned at bottom right of the image */
+.speak-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.speak-icon:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+/* Feedback area */
+.feedback {
+  color: green;
+  font-size: 1.5em;
+  text-align: center;
+  min-height: 2rem;
+  line-height: 2rem;
+  margin: 0.5rem 0;
+}
+
+/* Keyboard container */
+.keyboard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+/* Keyboard rows */
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0;
+}
+
+/* Fixed-size keys for uniformity */
+.key-button {
+  width: 50px;
+  height: 50px;
+  font-size: 1em;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  background: linear-gradient(to bottom, #ffffff, #cccccc);
+  box-shadow: 0 4px 0 #999;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+}
+
+.key-button:hover {
+  background: linear-gradient(to bottom, #ffffff, #c0c0c0);
+}
+
+.key-button:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}

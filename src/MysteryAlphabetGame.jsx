@@ -47,6 +47,7 @@ const MysteryAlphabetGame = () => {
     getRandomItem();
   }, []);
 
+  // Wrap handleKeyPress in useCallback to maintain a stable reference.
   const handleKeyPress = useCallback((event) => {
     const pressedKey = event.key.toUpperCase();
     if (currentItem && pressedKey === currentItem.letter.toUpperCase()) {
@@ -78,7 +79,7 @@ const MysteryAlphabetGame = () => {
     handleKeyPress({ key: letter });
   };
 
-  // Speech synthesis function
+  // Speech synthesis triggered by user interaction (e.g., clicking the speak icon)
   const speakAnimalName = (name) => {
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(name);
@@ -90,15 +91,22 @@ const MysteryAlphabetGame = () => {
     <div className="game-container">
       <div className="image-container">
         {currentItem && (
-          <img
-            src={currentItem.image}
-            alt={currentItem.name}
-            className="item-image"
-            onLoad={() => speakAnimalName(currentItem.name)}
-          />
+          <div className="image-wrapper">
+            <img
+              src={currentItem.image}
+              alt={currentItem.name}
+              className="item-image"
+              onLoad={() => speakAnimalName(currentItem.name)}
+            />
+            <button
+              className="speak-icon"
+              onClick={() => speakAnimalName(currentItem.name)}
+            >
+              &#128266;
+            </button>
+          </div>
         )}
       </div>
-      {/* Instructions removed */}
       <div className="feedback">{message}</div>
       <div className="keyboard">
         <div className="keyboard-row">
