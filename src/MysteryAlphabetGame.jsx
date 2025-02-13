@@ -35,6 +35,7 @@ const MysteryAlphabetGame = () => {
   const [currentItem, setCurrentItem] = useState(null);
   const [message, setMessage] = useState('');
   const [wrongCount, setWrongCount] = useState(0);
+  const [flashLetter, setFlashLetter] = useState(null);
 
   const getRandomItem = () => {
     const randomIndex = Math.floor(Math.random() * alphabetItems.length);
@@ -47,7 +48,18 @@ const MysteryAlphabetGame = () => {
     getRandomItem();
   }, []);
 
-  // Wrap handleKeyPress in useCallback to maintain a stable reference.
+  // When the current item changes, trigger a flash on the correct key
+  useEffect(() => {
+    if (currentItem) {
+      setFlashLetter(currentItem.letter.toUpperCase());
+      const timer = setTimeout(() => {
+        setFlashLetter(null);
+      }, 1000); // Flash lasts for 1 second
+      return () => clearTimeout(timer);
+    }
+  }, [currentItem]);
+
+  // Wrap handleKeyPress in useCallback so it can be safely added as a dependency.
   const handleKeyPress = useCallback((event) => {
     const pressedKey = event.key.toUpperCase();
     if (currentItem && pressedKey === currentItem.letter.toUpperCase()) {
@@ -79,7 +91,7 @@ const MysteryAlphabetGame = () => {
     handleKeyPress({ key: letter });
   };
 
-  // Speech synthesis triggered by user interaction (e.g., clicking the speak icon)
+  // Speech synthesis triggered by user interaction
   const speakAnimalName = (name) => {
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(name);
@@ -113,7 +125,7 @@ const MysteryAlphabetGame = () => {
           {['Q','W','E','R','T','Y','U','I','O','P'].map(letter => (
             <button
               key={letter}
-              className="key-button"
+              className={`key-button${flashLetter === letter ? ' flash' : ''}`}
               onClick={() => handleVirtualKeyClick(letter)}
             >
               {letter}
@@ -124,7 +136,7 @@ const MysteryAlphabetGame = () => {
           {['A','S','D','F','G','H','J','K','L'].map(letter => (
             <button
               key={letter}
-              className="key-button"
+              className={`key-button${flashLetter === letter ? ' flash' : ''}`}
               onClick={() => handleVirtualKeyClick(letter)}
             >
               {letter}
@@ -135,7 +147,7 @@ const MysteryAlphabetGame = () => {
           {['Z','X','C','V','B','N','M'].map(letter => (
             <button
               key={letter}
-              className="key-button"
+              className={`key-button${flashLetter === letter ? ' flash' : ''}`}
               onClick={() => handleVirtualKeyClick(letter)}
             >
               {letter}
